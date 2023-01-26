@@ -5,6 +5,11 @@ const gameConfig = {
     isPlaying: false
 }
 
+const coinSound = new Audio('./audio/smw_coin.wav');
+const footStep = new Audio('./audio/smw_footstep.wav');
+
+footStep.volume = 0.05;
+
 const statsText = document.createElement("h1");
 const scoreText = document.createElement("span");
 const timeText = document.createElement("span");
@@ -52,24 +57,29 @@ function controlTween(e){
 
     if(gameConfig.isPlaying) {
         if(e.key === 'ArrowDown' || e.key === 'Down'){
+            footStep.play();
             moveVertical(avatar, 50);
         }
 
         if(e.key === 'ArrowUp' || e.key === 'Up'){
+            footStep.play();
             moveVertical(avatar, -50);
         }
 
         if(e.key === 'ArrowLeft' || e.key === 'Left'){
+            footStep.play();
             avatar.style.transform = "scaleX(-1)";
             moveHorizontal(avatar, -50);
         }
 
         if(e.key === 'ArrowRight' || e.key === 'Right'){
+            footStep.play();
             avatar.style.transform = "scaleX(1)";
             moveHorizontal(avatar, 50);
         }
 
         if(isTouching(avatar,coin)) {
+            coinSound.play();
             moveCoin();
             scoreText.innerHTML = `Score: ${++gameConfig.score}`;
         } 
